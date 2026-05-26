@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="store.css" />
+  </head>
+
+  <body id="body">
+    <div class="saldo">saldo: <span id="saldo"></span></div>
+    <h1>Store</h1>
+    <p>Selamat datang di toko Kucing❤️❤️</p>
+    <div id="products"></div>
+    <script>
+      let saldo = 100;
+      document.getElementById("saldo").innerHTML = saldo.toLocaleString();
+      const Product = [
+        { id: 1, name: "Product 1", price: 10, img: "cat1.jpg" },
+        { id: 2, name: "Product 2", price: 20, img: "cat2.jpg" },
+        { id: 3, name: "Product 3", price: 30, img: "cat3.jpg" },
+        { id: 4, name: "Product 4", price: 40, img: "cat4.jpg" },
+        { id: 5, name: "Product 5", price: 50, img: "cat5.jpg" },
+        { id: 6, name: "Product 6", price: 60, img: "cat6.jpg" },
+        { id: 7, name: "Product 7", price: 70, img: "cat7.jpg" },
+      ];
+      const cart = document.getElementById("products");
+      cart.innerHTML = Product.map((product) => {
+        return `
+          <div class="product">
+            <img src="${product.img}" alt="${product.name}" />
+            <h2>${product.name}</h2>
+            <p>Price: Rp${product.price}</p>
+            <button class="btn-grad"   onclick="addToCart(${product.id})">Add to Cart</button>
+          </div>
+        `;
+      }).join("");
+
+      function addToCart(productId) {
+        const product = Product.find((p) => p.id === productId);
+        if (product) {
+          if (saldo >= product.price) {
+            saldo -= product.price;
+            alert(
+              `menambahkan ${product.name} ke keranjang! Saldo tersisa: Rp${saldo}`,
+            );
+            document.getElementById("saldo").innerHTML = saldo.toLocaleString();
+          } else {
+            alert(
+              `saldo tidak mencukupi untuk menambahkan ${product.name} ke keranjang!`,
+            );
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
